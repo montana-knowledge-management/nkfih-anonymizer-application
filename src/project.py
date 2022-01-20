@@ -4,6 +4,7 @@ from digital_twin_distiller.encapsulator import Encapsulator
 from digital_twin_distiller.ml_project import AbstractTask, Classifier
 from digital_twin_distiller.modelpaths import ModelDir
 from importlib_resources import files
+from keras.models import load_model
 
 from ner import DataLoader
 
@@ -165,7 +166,7 @@ class NerClassifier(Classifier):
 
 if __name__ == "__main__":
     ModelDir.set_base(__file__)
-    app = nkfihAnonymizer(app_name="Anonymizer based on Distiller", no_cache=True)
+    app = nkfihAnonymizer(app_name="Anonymizer based on Distiller")  # , no_cache=True)
     server = Encapsulator(app)
     server.build_docs()
     server.run()
