@@ -19,6 +19,9 @@ python = ">=3.9"
 
 
 # Dependencies for developers
+hungarian-stemmer = "^2022.1"
+fasttext = "^0.9.2"
+nltk = "^3.6.7"
 # list all devtools here
 [tool.poetry.dev-dependencies]
 black = "*"
