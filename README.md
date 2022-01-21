@@ -32,7 +32,7 @@ Az API az adatot JSON formátumban várja, az elemzendő mondatot a "text" attri
 
 ```
 {
-  "text": ""
+  "text": "Példa mondat."
 }
 ```
 
@@ -44,7 +44,17 @@ tanulási modellt kezelni egy projekten belül, tehát egyaránt alkalmas pl. `s
 
 A jelen implementációban egy ... modell szerepel.
 
-Ábra: F1, stb.
+Ábra: F1, stb. (teljesítmény?)
+
+## Kimeneti formátum
+
+IOB2 taggelési formátum?
+
+Elkerülve a monogramok használatát, a rendszer a neveket
+„X” karakterre cseréli kizárólag az első karaktert meghagyva
+és a rövidítést ponttal jelölve?
+
+
 
 ## Endpoint-ok
 

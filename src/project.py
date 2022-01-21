@@ -1,3 +1,4 @@
+import nltk
 import numpy as np
 from digital_twin_distiller import ml_project
 from digital_twin_distiller.encapsulator import Encapsulator
@@ -7,6 +8,8 @@ from importlib_resources import files
 from keras.models import load_model
 
 from ner import DataLoader
+
+nltk.download("punkt")
 
 
 class nkfihAnonymizer(ml_project.MachineLearningProject):
@@ -39,7 +42,9 @@ class NerTask(AbstractTask):
 class NerClassifier(Classifier):
     def load_model(self):
         self.classifier = load_model(
-            "/media/csanyig/C8CC19CCCC19B622/Users/csanyig/Montana/NLP/NER_distiller_models/weighted_ner_epoch_1_with_trained_pretrained_embedding_bio_cells_20_dim_100_all_data.h5"
+            files("resources")
+            / "weighted_ner_epoch_1_with_trained_pretrained_embedding_bio_cells_20_dim_100_all_data.h5"
+            # "/media/csanyig/C8CC19CCCC19B622/Users/csanyig/Montana/NLP/NER_distiller_models/weighted_ner_epoch_1_with_trained_pretrained_embedding_bio_cells_20_dim_100_all_data.h5"
         )
         self.data_loader = DataLoader(max_sequence_length=60, use_lemmas=False, use_bio=True)
         self.data_loader.load_idx2word(files("resources") / "idx2word_punct_all.json")
