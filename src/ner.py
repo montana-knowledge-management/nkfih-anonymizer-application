@@ -170,7 +170,7 @@ class DataLoader:
         """
 
         # JsonWriter().write(self.vocabulary, path_to_save)
-        DataSnapshot.save(self.vocabulary, path_to_save)
+        DataSnapshot.save([self.vocabulary], path_to_save)
 
     def save_idx2word(self, path_to_save):
         """
@@ -187,7 +187,7 @@ class DataLoader:
         :param path_to_load_from:
         :return:
         """
-        DataSnapshot.save([self.index_to_word], path_to_load_from)
+        self.vocabulary = DataSnapshot.load_stack(path_to_load_from)[0]
         # self.vocabulary = JsonReader().read(path_to_load_from)
 
     def load_idx2word(self, path_to_load_from):
@@ -323,19 +323,3 @@ class DataLoader:
                     embedding_matrix[idx + vocab_size + 2] = embedding_vector
 
         return embedding_matrix
-
-
-if __name__ == "__main__":
-
-    # vocab_path = str(files("resources") / "vocab_punct_all.json")
-    # idx2word_path = str(files("resources") / "idx2word_punct_all.json")
-    vocab_path = str(files("resources") / "vocab_punct_all")
-    idx2word_path = str(files("resources") / "idx2word_punct_all")
-
-    loader = DataLoader(use_lemmas=False, max_sequence_length=5, use_bio=True)
-    # loader.load_training_file(4)#, filter_pos=["PUNCT"])
-    loader.load_all_training_data()
-    loader.load_unique_labels_dict()
-    loader.build_vocab()
-    loader.save_vocabulary(vocab_path)
-    loader.save_idx2word(idx2word_path)
