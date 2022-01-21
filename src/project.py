@@ -7,7 +7,7 @@ from digital_twin_distiller.modelpaths import ModelDir
 from importlib_resources import files
 from keras.models import load_model
 
-from ner import DataLoader
+from src.ner import DataLoader
 
 nltk.download("punkt")
 
