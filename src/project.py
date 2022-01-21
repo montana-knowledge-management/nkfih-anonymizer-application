@@ -44,11 +44,10 @@ class NerClassifier(Classifier):
         self.classifier = load_model(
             files("resources")
             / "weighted_ner_epoch_1_with_trained_pretrained_embedding_bio_cells_20_dim_100_all_data.h5"
-            # "/media/csanyig/C8CC19CCCC19B622/Users/csanyig/Montana/NLP/NER_distiller_models/weighted_ner_epoch_1_with_trained_pretrained_embedding_bio_cells_20_dim_100_all_data.h5"
         )
         self.data_loader = DataLoader(max_sequence_length=60, use_lemmas=False, use_bio=True)
-        self.data_loader.load_idx2word(files("resources") / "idx2word_punct_all.json")
-        self.data_loader.load_vocabulary(files("resources") / "vocab_punct_all.json")
+        self.data_loader.load_idx2word(files("resources") / "idx2word_punct_all.zip")
+        self.data_loader.load_vocabulary(files("resources") / "vocab_punct_all.zip")
         self.data_loader.load_unique_labels_dict()
 
     @staticmethod

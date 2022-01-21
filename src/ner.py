@@ -3,6 +3,7 @@ from collections import Counter
 
 import fasttext
 import numpy as np
+from digital_twin_distiller.data_store.data_snapshot import DataSnapshot
 from digital_twin_distiller.text_readers import JsonReader
 from digital_twin_distiller.text_writers import JsonWriter
 from hungarian_stemmer.hungarian_stemmer import HungarianStemmer
@@ -78,10 +79,16 @@ class DataLoader:
         Loads unique labels dict.
         :return:
         """
+
         if self.use_bio:
-            self.unique_labels_dict = JsonReader().read(files("resources") / "unique_labels_dict_bio.json")
+            self.unique_labels_dict = DataSnapshot.load_stack(files("resources") / "unique_labels_dict_bio.zip")[0]
+
+            # self.unique_labels_dict = dataloader.load_stack(files("resources") / "unique_labels_dict_bio.zip")
+            # self.unique_labels_dict = JsonReader().read(files("resources") / "unique_labels_dict_bio.json")
         else:
-            self.unique_labels_dict = JsonReader().read(files("resources") / "unique_labels_dict.json")
+            # self.unique_labels_dict = JsonReader().read(files("resources") / "unique_labels_dict.zip")
+            self.unique_labels_dict = DataSnapshot.load_stack(files("resources") / "unique_labels_dict.zip")[0]
+            # self.unique_labels_dict = dataloader.load_stack(files("resources") / "unique_labels_dict.zip")
 
     def load_all_training_data(self, filter_pos: list = None):
         """
@@ -161,7 +168,9 @@ class DataLoader:
         :param path_to_save:
         :return:
         """
-        JsonWriter().write(self.vocabulary, path_to_save)
+
+        # JsonWriter().write(self.vocabulary, path_to_save)
+        DataSnapshot.save(self.vocabulary, path_to_save)
 
     def save_idx2word(self, path_to_save):
         """
@@ -169,7 +178,8 @@ class DataLoader:
         :param path_to_save:
         :return:
         """
-        JsonWriter().write(self.index_to_word, path_to_save)
+        # JsonWriter().write(self.index_to_word, path_to_save)
+        DataSnapshot.save([self.index_to_word], path_to_save)
 
     def load_vocabulary(self, path_to_load_from):
         """
@@ -177,7 +187,8 @@ class DataLoader:
         :param path_to_load_from:
         :return:
         """
-        self.vocabulary = JsonReader().read(path_to_load_from)
+        DataSnapshot.save([self.index_to_word], path_to_load_from)
+        # self.vocabulary = JsonReader().read(path_to_load_from)
 
     def load_idx2word(self, path_to_load_from):
         """
@@ -186,7 +197,9 @@ class DataLoader:
         :return:
         """
         # all index keys are strings now
-        loaded_json = JsonReader().read(path_to_load_from)
+        # loaded_json = JsonReader().read(path_to_load_from)
+        loaded_json = DataSnapshot.load_stack(path_to_load_from)[0]
+
         # converting strings to integers
         self.index_to_word = {int(key): value for key, value in loaded_json.items()}
 
@@ -313,8 +326,12 @@ class DataLoader:
 
 
 if __name__ == "__main__":
-    vocab_path = str(files("resources") / "vocab_punct_all.json")
-    idx2word_path = str(files("resources") / "idx2word_punct_all.json")
+
+    # vocab_path = str(files("resources") / "vocab_punct_all.json")
+    # idx2word_path = str(files("resources") / "idx2word_punct_all.json")
+    vocab_path = str(files("resources") / "vocab_punct_all")
+    idx2word_path = str(files("resources") / "idx2word_punct_all")
+
     loader = DataLoader(use_lemmas=False, max_sequence_length=5, use_bio=True)
     # loader.load_training_file(4)#, filter_pos=["PUNCT"])
     loader.load_all_training_data()
