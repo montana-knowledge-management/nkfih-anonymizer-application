@@ -114,7 +114,7 @@ Az API az adatot JSON formátumban várja, az elemzendő mondatot a "text" attri
 }
 ```
 
-![Használat](fig/usage_.gif)
+![Használat](fig/ner_app.gif)
 
 
 ## Referenciák
